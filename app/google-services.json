@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "231040384620",
+    "project_id": "shopping-kotlin-list",
+    "storage_bucket": "shopping-kotlin-list.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:231040384620:android:d07da5ab88c654ff152249",
+        "android_client_info": {
+          "package_name": "com.example.shoppingliststartcodekotlin"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "231040384620-4ulmuv1i6gdubb01gs5ppnp41mn94rl3.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAW9tEBFk8GUiJlSlZK9QEBk4j-4AT5QT8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "231040384620-4ulmuv1i6gdubb01gs5ppnp41mn94rl3.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
