@@ -34,6 +34,7 @@
                     android:layout_height="wrap_content"
                     android:ems="10"
                     android:inputType="textPersonName" />
+
             </LinearLayout>
 
             <LinearLayout
@@ -49,10 +50,11 @@
 
                 <EditText
                     android:id="@+id/editTextPrice"
-                    android:layout_width="match_parent"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:ems="10"
-                    android:inputType="textPersonName" />
+                    android:inputType="number" />
+
             </LinearLayout>
 
         </LinearLayout>
@@ -68,15 +70,13 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:ems="10"
-            android:inputType="textPersonName"
-            android:visibility="visible"
-            tools:visibility="visible" />
+            android:inputType="number" />
 
         <Button
             android:id="@+id/button_add"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:backgroundTint="#9A3C3C"
+            android:backgroundTint="#8763DC"
             android:text="Add Item"
             tools:layout_editor_absoluteX="281dp"
             tools:layout_editor_absoluteY="98dp" />
@@ -92,7 +92,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:backgroundTint="#9A3C3C"
+                android:backgroundTint="#C87777"
                 android:text="Sort by Name" />
 
             <Button
@@ -100,7 +100,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:backgroundTint="#9A3C3C"
+                android:backgroundTint="#B1835A"
                 android:text="Sort by Quantity" />
 
             <Button
@@ -108,7 +108,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:backgroundTint="#9A3C3C"
+                android:backgroundTint="#83C877"
                 android:text="Sort by Price" />
 
 
