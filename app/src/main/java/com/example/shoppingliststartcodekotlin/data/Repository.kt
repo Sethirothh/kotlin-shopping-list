@@ -80,9 +80,9 @@ object Repository {
 
     fun createTestData()
     {
-        val product1 = Product("Pasta", "6 kr.", 0, )
-        val product2 = Product("Pasta", "6 kr.", 0, )
-        val product3 = Product("Pasta", "6 kr.", 0, )
+        val product1 = Product("Pasta", 0, 0, )
+        val product2 = Product("Pasta", 0, 0, )
+        val product3 = Product("Pasta", 0, 0, )
 
 
         //add some products to the products list - for testing purposes

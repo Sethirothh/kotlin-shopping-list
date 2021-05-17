@@ -63,13 +63,6 @@
             android:layout_height="wrap_content"
             android:text="Quantity" />
 
-        <Spinner
-            android:id="@+id/spinner"
-            android:layout_width="match_parent"
-            android:layout_height="42dp"
-            android:visibility="invisible"
-            tools:visibility="gone" />
-
         <EditText
             android:id="@+id/editTextQuantity"
             android:layout_width="match_parent"
@@ -83,7 +76,8 @@
             android:id="@+id/button_add"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Add"
+            android:backgroundTint="#9A3C3C"
+            android:text="Add Item"
             tools:layout_editor_absoluteX="281dp"
             tools:layout_editor_absoluteY="98dp" />
 
@@ -98,6 +92,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
+                android:backgroundTint="#9A3C3C"
                 android:text="Sort by Name" />
 
             <Button
@@ -105,7 +100,16 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="Sort by Number" />
+                android:backgroundTint="#9A3C3C"
+                android:text="Sort by Quantity" />
+
+            <Button
+                android:id="@+id/sortPriceButton"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:backgroundTint="#9A3C3C"
+                android:text="Sort by Price" />
 
 
         </LinearLayout>

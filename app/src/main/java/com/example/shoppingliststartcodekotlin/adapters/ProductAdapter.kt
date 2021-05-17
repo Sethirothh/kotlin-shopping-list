@@ -22,7 +22,7 @@ class ProductAdapter(var products: MutableList<Product>) :
 
     override fun onBindViewHolder(holder: ProductAdapter.ViewHolder, position: Int) {
         holder.itemTitle.text = products[position].name
-        holder.itemPrice.text = products[position].price
+        holder.itemPrice.text = products[position].price.toString()
         holder.itemQuantity.text = products[position].quantity.toString()
     }
 

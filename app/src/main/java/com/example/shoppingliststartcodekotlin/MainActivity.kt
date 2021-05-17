@@ -16,7 +16,6 @@ import com.example.shoppingliststartcodekotlin.adapters.ProductAdapter
 import com.example.shoppingliststartcodekotlin.data.Product
 import com.example.shoppingliststartcodekotlin.data.Repository
 import com.example.shoppingliststartcodekotlin.data.Repository.addProduct
-import com.example.shoppingliststartcodekotlin.data.Repository.deleteAllProducts
 import com.google.firebase.FirebaseApp
 import kotlinx.android.synthetic.main.activity_main.*
 
@@ -24,7 +23,7 @@ class MainActivity : AppCompatActivity() {
 
     //you need to have an Adapter for the products
    lateinit var adapter: ProductAdapter
-    private val items = arrayOf("0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10")
+    private val numbers = arrayOf("0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10")
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         // Inflate the menu; this adds items to the action bar if it is present.
@@ -37,7 +36,7 @@ class MainActivity : AppCompatActivity() {
         val newProduct = Product(
             name = editTextTitle.text.toString(),
             quantity = editTextQuantity.text.toString().toInt(),
-            price = editTextPrice.text.toString(),
+            price = editTextPrice.text.toString().toInt(),
         )
         addProduct(newProduct)
     }
@@ -62,51 +61,42 @@ class MainActivity : AppCompatActivity() {
             Repository.products.sortByDescending { it.quantity }
             adapter.notifyDataSetChanged()
         }
-
-        //Spinner
-        val adapter = ArrayAdapter(this,
-            android.R.layout.simple_spinner_dropdown_item, items)
-
-        spinner.adapter = adapter
-
-        spinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-
-            //The AdapterView<?> type means that this can be any type,
-            //so we can use both AdapterView<String> or any other
-            override fun onItemSelected(adapterView: AdapterView<*>, view: View,
-                                        position: Int, id: Long) {
-                //So this code is called when ever the spinner is clicked
-                Toast.makeText(this@MainActivity,
-                    "Item selected: " + items[position], Toast.LENGTH_SHORT)
-                    .show()
-
-            }
-
-            override fun onNothingSelected(arg0: AdapterView<*>) {
-                // you would normally do something here
-                // for instace setting the selected item to "null"
-                // or something.
-            }
+        sortPriceButton.setOnClickListener {
+            Repository.products.sortByDescending { it.price }
+            adapter.notifyDataSetChanged()
         }
-    }
+        //Settings
 
-
-    fun updateUI() {
-        val layoutManager = LinearLayoutManager(this)
-
-        /*you need to have a defined a recylerView in your
-        xml file - in this case the id of the recyclerview should
-        be "recyclerView" - as the code line below uses that */
-
-       recyclerView.layoutManager = layoutManager
-
-       adapter = ProductAdapter(Repository.products)
-
-      /*connecting the recyclerview to the adapter  */
-        recyclerView.adapter = adapter
 
     }
 
+    //Settings
+
+    private val RESULT_CODE_PREFERENCES = 1
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        if (requestCode == RESULT_CODE_PREFERENCES)
+        //the code means we came back from settings
+        {
+            //I can call these methods like this, because they are static
+            val male = PreferenceHandler.isMale(this)
+            val name = PreferenceHandler.getName(this)
+            var toastGender = "";
+            if (male) {
+                toastGender = resources.getString(R.string.male)
+            } else {
+                toastGender = resources.getString(R.string.female)
+            }
+
+            val message = "Velkommen, $name, Jeg kan se at du er en ægte $toastGender";
+            val toast = Toast.makeText(this, message, Toast.LENGTH_LONG)
+            toast.show()
+        }
+        super.onActivityResult(requestCode, resultCode, data)
+    }
+
+
+    // Options
     fun convertListToString(): String
     {
         var result = ""
@@ -151,9 +141,34 @@ class MainActivity : AppCompatActivity() {
                 startActivity(getIntent());
                 return true
             }
+            R.id.action_settings -> {
+                //Start our settingsactivity and listen to result - i.e.
+                //when it is finished.
+                val intent = Intent(this, SettingsActivity::class.java)
+                startActivityForResult(intent, RESULT_CODE_PREFERENCES)
+
+            }
         }
 
         return false //we did not handle the event
+
+    }
+
+    fun updateUI() {
+
+
+        val layoutManager = LinearLayoutManager(this)
+
+        /*you need to have a defined a recylerView in your
+        xml file - in this case the id of the recyclerview should
+        be "recyclerView" - as the code line below uses that */
+
+        recyclerView.layoutManager = layoutManager
+
+        adapter = ProductAdapter(Repository.products)
+
+        /*connecting the recyclerview to the adapter  */
+        recyclerView.adapter = adapter
 
     }
 }
