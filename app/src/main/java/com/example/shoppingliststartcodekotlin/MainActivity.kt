@@ -15,6 +15,7 @@ import com.example.shoppingliststartcodekotlin.data.Repository
 import com.example.shoppingliststartcodekotlin.data.Repository.addProduct
 import com.google.firebase.FirebaseApp
 import kotlinx.android.synthetic.main.activity_main.*
+import org.pondar.dialogfragmentdemokotlinnew.MyDialogFragment
 
 class MainActivity : AppCompatActivity() {
 
@@ -32,8 +33,8 @@ class MainActivity : AppCompatActivity() {
 
         val newProduct = Product(
             name = editTextTitle.text.toString(),
-            quantity = editTextQuantity.text.toString().toInt(),
             price = editTextPrice.text.toString().toInt(),
+            quantity = editTextQuantity.text.toString().toInt(),
         )
         addProduct(newProduct)
     }
@@ -41,6 +42,8 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         FirebaseApp.initializeApp(applicationContext)
+
+        //Create Item Button
         button_add.setOnClickListener{ addNewProduct()}
 
         Repository.getData().observe(this, Observer {
@@ -68,7 +71,6 @@ class MainActivity : AppCompatActivity() {
     }
 
     //Settings
-
     private val RESULT_CODE_PREFERENCES = 1
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -85,7 +87,7 @@ class MainActivity : AppCompatActivity() {
                 toastGender = resources.getString(R.string.female)
             }
 
-            val message = "Velkommen, $name, Jeg kan se at du er en ægte $toastGender";
+            val message = "Welcome, $name, I can see that you're a real $toastGender";
             val toast = Toast.makeText(this, message, Toast.LENGTH_LONG)
             toast.show()
         }
@@ -110,7 +112,7 @@ class MainActivity : AppCompatActivity() {
         // as you specify a parent activity in AndroidManifest.xml.
         Log.d("icon_pressed", "${item.itemId}")
         when (item.itemId) {
-            R.id.item_about -> {
+            R.id.item_share -> {
                 /* Share content */
                 val text = convertListToString() //from EditText
                 val sharingIntent = Intent(Intent.ACTION_SEND)
@@ -123,7 +125,9 @@ class MainActivity : AppCompatActivity() {
             R.id.item_delete -> {
                 Toast.makeText(this, "Delete item clicked!", Toast.LENGTH_LONG)
                     .show()
-                Repository.deleteAllProducts();
+                val dialog = MyDialogFragment(::positiveClicked, ::negativeClick)
+                dialog.show(supportFragmentManager, "myFragment")
+
                 return true
             }
             R.id.item_help -> {
@@ -151,11 +155,30 @@ class MainActivity : AppCompatActivity() {
 
     }
 
+
+    //callback function from yes/no dialog - for yes choice
+    fun positiveClicked() {
+        val toast = Toast.makeText(
+            this,
+            "All Items Deleted", Toast.LENGTH_LONG
+        )
+        toast.show()
+        Repository.deleteAllProducts()
+    }
+
+
+    //callback function from yes/no dialog - for no choice
+    fun negativeClick() {
+        //Here we override the method and can now do something
+        val toast = Toast.makeText(
+            this,
+            "No Items Deleted", Toast.LENGTH_LONG
+        )
+        toast.show()
+    }
+
     fun updateUI() {
-
-
         val layoutManager = LinearLayoutManager(this)
-
         /*you need to have a defined a recylerView in your
         xml file - in this case the id of the recyclerview should
         be "recyclerView" - as the code line below uses that */

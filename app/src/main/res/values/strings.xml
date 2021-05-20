@@ -4,8 +4,8 @@
     <string name="enterName"> Enter name</string>
     <string name="myName">Your name: </string>
     <string name="myGender">Your gender:</string>
-    <string name="male">Mand</string>
-    <string name="female">Kvinde</string>
+    <string name="male">Man</string>
+    <string name="female">Woman</string>
     <string name="delete">Delete All</string>
     <string name="about">Share</string>
     <string name="refresh">Refresh</string>

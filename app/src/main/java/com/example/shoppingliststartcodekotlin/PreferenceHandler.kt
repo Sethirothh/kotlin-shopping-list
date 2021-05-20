@@ -22,6 +22,4 @@ object PreferenceHandler {
     fun getName(context: Context): String {
         return PreferenceManager.getDefaultSharedPreferences(context).getString(SETTINGS_NAMEKEY, "")!!
     }
-
-
 }

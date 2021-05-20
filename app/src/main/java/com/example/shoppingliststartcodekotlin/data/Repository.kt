@@ -10,23 +10,31 @@ import com.google.firebase.ktx.Firebase
 object Repository {
     var products = mutableListOf<Product>()
     private lateinit var db: FirebaseFirestore
+
     //listener to changes that we can then use in the Activity
     private var productListener = MutableLiveData<MutableList<Product>>()
 
 
     fun getData(): MutableLiveData<MutableList<Product>> {
         if (products.isEmpty())
+            //data-fetch
             addRealTimeListener()
+
+            //get-test-data
+            //createTestData()
         productListener.value = products //we inform the listener we have new data
         return productListener
     }
 
     fun addProduct(product:Product) {
+        //making the firestore val
         db = Firebase.firestore
+        val docRef = db.collection("products")
+        //Product Add to List
         products.add(product)
         productListener.value = products
-        db.collection("products")
-            .add(product)
+        //Product add to collection
+        docRef.add(product)
             .addOnSuccessListener { documentReference ->
                 Log.d("Error", "DocumentSnapshot written with ID: " + documentReference.id)
                 product.id = documentReference.id            }
@@ -37,9 +45,10 @@ object Repository {
 
     fun deleteAllProducts(): MutableLiveData<MutableList<Product>>{
         db = Firebase.firestore
+        val docRef = db.collection("products")
         productListener.value = products
         for (product in products){
-            db.collection("products").document(product.id).delete().addOnSuccessListener {
+            docRef.document(product.id).delete().addOnSuccessListener {
                 Log.d("Snapshot","DocumentSnapshot with id: ${product.id} successfully deleted!")
                 // products.removeAt(index) //removes it from the list
             }
@@ -52,8 +61,9 @@ object Repository {
     }
     fun deleteProduct(index: Int) {
         db = Firebase.firestore
+        val docRef = db.collection("products")
         val product = products[index]
-        db.collection("products").document(product.id).delete().addOnSuccessListener {
+        docRef.document(product.id).delete().addOnSuccessListener {
             Log.d("Snapshot","DocumentSnapshot with id: ${product.id} successfully deleted!")
             //products.removeAt(index) //removes it from the list
         }
@@ -63,7 +73,8 @@ object Repository {
     fun readDataFromFireBase()
     {
         val db = Firebase.firestore
-        db.collection("products").get()
+        val docRef = db.collection("products")
+        docRef.get()
             .addOnSuccessListener { result ->
                 for (document in result) {
                     Log.d("Repository", "${document.id} => ${document.data}")
@@ -78,6 +89,7 @@ object Repository {
             }
     }
 
+    //Testing purposes
     fun createTestData()
     {
         val product1 = Product("Pasta", 0, 0, )

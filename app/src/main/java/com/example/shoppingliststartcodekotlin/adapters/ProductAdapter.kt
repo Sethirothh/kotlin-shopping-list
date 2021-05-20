@@ -47,12 +47,11 @@ class ProductAdapter(var products: MutableList<Product>) :
             itemPrice = itemView.findViewById(R.id.item_prices)
             itemQuantity = itemView.findViewById(R.id.item_quantity)
             itemDelete= itemView.findViewById(R.id.item_delete)
-
-
             itemDelete.setOnClickListener { v: View ->
                 val position = adapterPosition
                 val parent = v.rootView.findViewById<View>(R.id.mainView)
                 val savedProduct = Repository.products[position]
+
                 Repository.deleteProduct(position)
                 notifyItemRemoved(position) //this line notify the adapter
                 // Snackbar
